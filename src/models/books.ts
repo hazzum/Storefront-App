@@ -1,15 +1,7 @@
 import Client from '../database'
 
 export type Book = {
-  id: number
-  title: string
-  author: string
-  total_pages: number
-  type: string
-  summary: string
-}
-
-export type newBook = {
+  id?: number
   title: string
   author: string
   total_pages: number
@@ -30,7 +22,7 @@ export class BookStore {
     }
   }
 
-  async create(book: newBook): Promise<Book> {
+  async create(book: Book): Promise<Book> {
     try {
       const connect = await Client.connect()
       const sql =

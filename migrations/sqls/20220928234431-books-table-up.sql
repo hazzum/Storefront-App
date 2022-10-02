@@ -1,4 +1,4 @@
-create table books (
+CREATE TABLE IF NOT EXISTS books (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(150),
 	author VARCHAR(255),

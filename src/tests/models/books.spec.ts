@@ -77,8 +77,8 @@ describe('Test books model CRUD operations', () => {
   })
 
   it('delete method should remove the book', async () => {
-    store.delete(1);
+    store.delete(1)
     const result = await store.getByID(1)
-    expect(result).toEqual(undefined as unknown as Book);
-  });
+    expect(result).toEqual(undefined as unknown as Book)
+  })
 })
