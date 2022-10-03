@@ -22,6 +22,18 @@ export class BookStore {
     }
   }
 
+  async getByID(id: number): Promise<Book> {
+    try {
+      const connect = await Client.connect()
+      const sql = 'SELECT * FROM books WHERE id=($1)'
+      const result = await connect.query(sql, [id])
+      connect.release()
+      return result.rows[0]
+    } catch (err) {
+      throw new Error(`Cannot retrieve book ${err}`)
+    }
+  }
+
   async create(book: Book): Promise<Book> {
     try {
       const connect = await Client.connect()
@@ -32,18 +44,6 @@ export class BookStore {
       return result.rows[0]
     } catch (err) {
       throw new Error(`Cannot create book ${err}`)
-    }
-  }
-
-  async getByID(id: number): Promise<Book> {
-    try {
-      const connect = await Client.connect()
-      const sql = 'SELECT * FROM books WHERE id=($1)'
-      const result = await connect.query(sql, [id])
-      connect.release()
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Cannot retrieve book ${err}`)
     }
   }
 
