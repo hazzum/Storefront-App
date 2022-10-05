@@ -1,55 +1,49 @@
 import express from 'express'
-import { Book, BookStore } from '../../../models/books'
+import { Product, ProductStore } from '../../../models/products'
 import { verifyTokenChain } from '../../../utilities/auth'
 
-const books = express.Router()
-const store = new BookStore()
+const products = express.Router()
+const store = new ProductStore()
 
 const Index = async (_req: express.Request, res: express.Response): Promise<void> => {
   try {
-    const books = await store.index()
-    res.status(200).send(books)
+    const products = await store.index()
+    res.status(200).send(products)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(500).json((err as Error).message)
   }
 }
 
 const getByID = async (req: express.Request, res: express.Response): Promise<void> => {
   try {
-    const book = await store.getByID(req.params.id as unknown as number)
-    res.status(200).send(book)
+    const product = await store.getByID(req.params.id as unknown as number)
+    res.status(200).send(product)
   } catch (err) {
-    res.status(400).json(err)
+    res.status(500).json((err as Error).message)
   }
 }
 
 const Create = async (req: express.Request, res: express.Response): Promise<void> => {
-  const book: Book = {
-    title: req.body.title,
-    author: req.body.author,
-    total_pages: req.body.total_pages,
-    type: req.body.type,
-    summary: req.body.summary
+  const product: Product = {
+    name: req.body.name,
+    price: req.body.price
   }
   try {
-    const newBook = await store.create(book)
-    res.status(200).send(newBook)
+    const newProduct = await store.create(product)
+    res.status(200).send(newProduct)
   } catch (err) {
     res.status(500).json((err as Error).message)
   }
 }
 
 const Update = async (req: express.Request, res: express.Response): Promise<void> => {
-  const book: Book = {
+  const product: Product = {
     id: req.params.id as unknown as number,
-    title: req.body.title,
-    author: req.body.author,
-    total_pages: req.body.total_pages,
-    type: req.body.type,
-    summary: req.body.summary
+    name: req.body.name,
+    price: req.body.price
   }
   try {
-    const updated = await store.update(book)
+    const updated = await store.update(product)
     res.status(200).send(updated)
   } catch (err) {
     res.status(500).json((err as Error).message)
@@ -65,10 +59,10 @@ const Remove = async (req: express.Request, res: express.Response): Promise<void
   }
 }
 
-books.get('/', Index)
-books.get('/:id', getByID)
-books.post('/', verifyTokenChain, Create)
-books.put('/:id', verifyTokenChain, Update)
-books.delete('/:id', verifyTokenChain, Remove)
+products.get('/', Index)
+products.get('/:id', getByID)
+products.post('/', verifyTokenChain, Create)
+products.put('/:id', verifyTokenChain, Update)
+products.delete('/:id', verifyTokenChain, Remove)
 
-export default books
+export default products

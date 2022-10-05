@@ -33,7 +33,7 @@ const getAuthToken = (req: express.Request, res: express.Response, next: () => v
 const verifyAuthToken = (_req: express.Request, res: express.Response, next: () => void): void => {
   try {
     const { id } = <UserIDJwtPayload>jwt.verify(res.locals.token, secret)
-    res.locals.user_id = id
+    res.locals.verified_user_id = id
     next()
   } catch (err) {
     res.status(401).json('Access denied, invalid token')
@@ -43,7 +43,7 @@ const verifyAuthToken = (_req: express.Request, res: express.Response, next: () 
 
 const verifyUser = (req: express.Request, res: express.Response, next: () => void): void => {
   try {
-    if (res.locals.user_id != req.params.id) {
+    if (res.locals.verified_user_id != req.params.id) {
       throw new Error('Access denied, invalid user.')
     }
     next()
