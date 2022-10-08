@@ -5,7 +5,7 @@ const salt = process.env.BCRYPT_PASSWORD as unknown as string
 const rounds = process.env.SALT_ROUNDS as unknown as string
 
 export type User = {
-  id?: number
+  id?: string
   first_name: string
   last_name: string
   user_name: string
@@ -25,7 +25,7 @@ export class UserStore {
     }
   }
 
-  async getByID(id: number): Promise<User> {
+  async getByID(id: string): Promise<User> {
     try {
       const connect = await Client.connect()
       const sql = 'SELECT * FROM users WHERE id=($1)'
@@ -50,10 +50,10 @@ export class UserStore {
     }
   }
 
-  async destroy(id: number): Promise<User> {
+  async destroy(id: string): Promise<User> {
     try {
       const connect = await Client.connect()
-      const sql = 'DELETE FROM users WHERE id=($1)'
+      const sql = 'DELETE FROM users WHERE id=($1) RETURNING *'
       const result = await connect.query(sql, [id])
       connect.release()
       return result.rows[0]

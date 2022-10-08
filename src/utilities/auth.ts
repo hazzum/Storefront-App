@@ -4,11 +4,11 @@ const secret = process.env.TOKEN_SECRET as unknown as string
 
 declare module 'jsonwebtoken' {
   export interface UserIDJwtPayload extends jwt.JwtPayload {
-    id: number
+    id: string
   }
 }
 
-export const encodeAuthToken = (user_id: number, user_name: string): string => {
+export const encodeAuthToken = (user_id: string, user_name: string): string => {
   return jwt.sign({ id: user_id, name: user_name }, secret, { expiresIn: '24h' })
 }
 
@@ -43,8 +43,8 @@ const verifyAuthToken = (_req: express.Request, res: express.Response, next: () 
 
 const verifyUser = (req: express.Request, res: express.Response, next: () => void): void => {
   try {
-    if (res.locals.verified_user_id != req.params.id) {
-      throw new Error('Access denied, invalid user.')
+    if (res.locals.verified_user_id != (req.params.id as unknown as string)) {
+      throw new Error('Access denied, wrong user.')
     }
     next()
   } catch (err) {

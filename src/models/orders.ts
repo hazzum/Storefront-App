@@ -1,24 +1,18 @@
 import Client from '../database'
 
 export type Order = {
-  id?: number
+  id?: string
   status: string
-  user_id?: number
-}
-
-export type Item = {
-  id?: number
-  quantity: number
-  order_id?: number
-  product_id?: number
+  user_id?: string
 }
 
 export class OrderStore {
-  async index(): Promise<Order[]> {
+  //show all orders that belongs to the current logged in user
+  async index(user_id: string): Promise<Order[]> {
     try {
       const connect = await Client.connect()
-      const sql = 'SELECT * FROM orders'
-      const result = await connect.query(sql)
+      const sql = 'SELECT * FROM orders WHERE user_id=($1)'
+      const result = await connect.query(sql, [user_id])
       connect.release()
       return result.rows
     } catch (err) {
@@ -26,7 +20,7 @@ export class OrderStore {
     }
   }
 
-  async getByID(id: number): Promise<Order> {
+  async getByID(id: string): Promise<Order> {
     try {
       const connect = await Client.connect()
       const sql = 'SELECT * FROM orders WHERE id=($1)'
@@ -62,52 +56,15 @@ export class OrderStore {
     }
   }
 
-  async delete(id: number): Promise<Order> {
+  async delete(id: string): Promise<Order> {
     try {
       const connect = await Client.connect()
-      const sql = 'DELETE FROM orders WHERE id=($1)'
+      const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *'
       const result = await connect.query(sql, [id])
       connect.release()
       return result.rows[0]
     } catch (err) {
       throw new Error(`Cannot delete order ${err}`)
-    }
-  }
-
-  async addItem(item: Item): Promise<Order> {
-    try {
-      const connect = await Client.connect()
-      const sql =
-        'INSERT INTO order_items (quantity, order_id, product_id) VALUES ($1, $2, $3) RETURNING *'
-      const result = await connect.query(sql, [...Object.values(item)])
-      connect.release()
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Cannot add item ${err}`)
-    }
-  }
-
-  async removeItem(id: number): Promise<Order> {
-    try {
-      const connect = await Client.connect()
-      const sql = 'DELETE FROM order_items WHERE id=($1)'
-      const result = await connect.query(sql, [id])
-      connect.release()
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Cannot remove item ${err}`)
-    }
-  }
-
-  async updateQuantity(item: Item): Promise<Order> {
-    try {
-      const connect = await Client.connect()
-      const sql = 'UPDATE TABLE order_items SET quantity=($2) WHERE id=($1)'
-      const result = await connect.query(sql, [...Object.values(item)])
-      connect.release()
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Cannot update quantity ${err}`)
     }
   }
 }
