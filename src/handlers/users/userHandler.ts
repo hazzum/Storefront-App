@@ -27,8 +27,8 @@ const Sign_up = async (req: express.Request, res: express.Response): Promise<voi
   }
   try {
     const newUser = await store.Sign_up(user)
-    let token = encodeAuthToken(newUser.id as unknown as string, newUser.user_name)
-    res.status(200).send({ user_id: newUser.id, authToken: token })
+    const token = encodeAuthToken(newUser.id as unknown as string, newUser.user_name)
+    res.status(200).send({ user_id: newUser.id as unknown as string, authToken: token })
   } catch (err) {
     res.status(500).json((err as Error).message)
   }
@@ -44,8 +44,8 @@ const Sign_in = async (req: express.Request, res: express.Response): Promise<voi
   try {
     const result = await store.Authenticate(req.body.user_name, req.body.password)
     if (result) {
-      let token = encodeAuthToken(result.id as unknown as string, result.user_name)
-      res.status(200).send({ user_id: result.id, authToken: token })
+      const token = encodeAuthToken(result.id as unknown as string, result.user_name)
+      res.status(200).send({ user_id: result.id as unknown as string, authToken: token })
     } else {
       res.status(400).send('user name or password is wrong')
     }

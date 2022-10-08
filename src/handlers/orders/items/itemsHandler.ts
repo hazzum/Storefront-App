@@ -1,8 +1,7 @@
 import express from 'express'
 import Joi from 'joi'
-import { it } from 'node:test'
-import { OrderStore } from '../../../models/orders'
-import { Item, ItemStore } from '../../../models/relations/items'
+import { Item, OrderStore } from '../../../models/orders'
+import { CartQueries } from '../../../services/cart'
 
 const iSchema: Joi.ObjectSchema = Joi.object({
   id: Joi.string().pattern(new RegExp('^[0-9]+$')),
@@ -11,7 +10,7 @@ const iSchema: Joi.ObjectSchema = Joi.object({
   product_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
 })
 const store = new OrderStore()
-const ops = new ItemStore()
+const cart = new CartQueries()
 
 const verifyUser = (verified_id: string, user_id: string): void => {
   if (verified_id != user_id) {
@@ -41,7 +40,7 @@ const showAll = async (req: express.Request, res: express.Response): Promise<voi
   }
   //handle database operation
   try {
-    const items = await ops.getItems(orderID)
+    const items = await cart.getItems(orderID)
     if (!items) {
       res.status(404).json('No results found')
       return
@@ -81,7 +80,7 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
   }
   //handle database operation
   try {
-    const newOrder = await ops.addItem(item)
+    const newOrder = await store.addItem(item)
     res.status(200).send(newOrder)
   } catch (err) {
     res.status(500).json((err as Error).message)
@@ -116,7 +115,7 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
   }
   //handle database operation
   try {
-    const updated = await ops.updateQuantity(item)
+    const updated = await store.updateQuantity(item)
     if (!updated) {
       res.status(404).json('No results found to be updated')
       return
@@ -151,7 +150,7 @@ const deleteItem = async (req: express.Request, res: express.Response): Promise<
   }
   //handle database operation
   try {
-    const deleted = await ops.removeItem(req.params.item)
+    const deleted = await store.removeItem(req.params.item)
     if (!deleted) {
       res.status(404).json('No results found to be deleted')
       return

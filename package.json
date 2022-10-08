@@ -4,14 +4,13 @@
   "description": "storefront app for udacity's advanced web track",
   "main": "index.js",
   "scripts": {
-    "test": "npx tsc & jasmine",
+    "test": "set ENV=test & db-migrate --env test up & yarn clean & npx tsc & jasmine & db-migrate --env test reset",
     "dev": "nodemon ./src/index.ts",
     "clean": "rimraf build/",
     "build": "yarn clean & npx tsc",
     "start": "npm run build & nodemon build/index.js",
     "format": "prettier --write src/**/*.{ts,tsx,js,jsx}",
-    "lint": "eslint . --ext .ts",
-    "test_db": "set ENV=test& db-migrate --env test up & npx tsc & jasmine & db-migrate --env test down"
+    "lint": "eslint . --ext .ts"
   },
   "author": "Hazem Mousa",
   "license": "ISC",

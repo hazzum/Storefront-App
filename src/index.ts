@@ -27,7 +27,7 @@ app.use('/api', routes)
 // add routing for / path
 app.get('/', (_req: express.Request, res: express.Response) => {
   res.json({
-    message: 'Hello World 🌍'
+    message: 'Welcome to my Storefront App 🌍'
   })
 })
 

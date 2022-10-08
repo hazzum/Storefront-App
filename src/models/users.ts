@@ -37,12 +37,12 @@ export class UserStore {
     }
   }
 
-  async update(book: User): Promise<User> {
+  async update(user: User): Promise<User> {
     try {
       const connect = await Client.connect()
       const sql =
         'UPDATE users SET first_name=$2, last_name=$3, user_name=$4 WHERE id=($1) RETURNING *'
-      const result = await connect.query(sql, [...Object.values(book)])
+      const result = await connect.query(sql, [...Object.values(user)])
       connect.release()
       return result.rows[0]
     } catch (err) {
