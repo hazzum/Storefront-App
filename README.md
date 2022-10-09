@@ -28,14 +28,14 @@ Here's an example of how you should configure your `database.json` file:
     "driver": "pg",
     "host": "127.0.0.1",
     "database": "storefront",
-    "user": "hazzum",
+    "user": "storefront_user",
     "password": "password"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
     "database": "storefront_test",
-    "user": "hazzum",
+    "user": "storefront_user",
     "password": "password"
   }
 }
