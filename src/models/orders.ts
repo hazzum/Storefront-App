@@ -14,11 +14,23 @@ export type Item = {
 }
 
 export class OrderStore {
-  //show all orders that belongs to the current logged in user
+  //show all completed orders that belongs to the current logged in user
   async index(user_id: string): Promise<Order[]> {
     try {
       const connect = await Client.connect()
-      const sql = 'SELECT * FROM orders WHERE user_id=($1)'
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='complete'"
+      const result = await connect.query(sql, [user_id])
+      connect.release()
+      return result.rows
+    } catch (err) {
+      throw new Error(`Cannot get orders ${err}`)
+    }
+  }
+
+  async showCurrent(user_id: string): Promise<Order[]> {
+    try {
+      const connect = await Client.connect()
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='active'"
       const result = await connect.query(sql, [user_id])
       connect.release()
       return result.rows

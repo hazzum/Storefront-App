@@ -10,6 +10,7 @@ export type User = {
   last_name: string
   user_name: string
   password?: string
+  password_digest?: string
 }
 
 export class UserStore {

@@ -4,7 +4,6 @@ import orderHandler from '../../../handlers/orders/orderHandler'
 import items from './items/item'
 
 const orders = express.Router()
-orders.get('/', verifyTokenChain, orderHandler.showAll)
 orders.get('/:id', verifyTokenChain, orderHandler.showOne)
 orders.post('/', verifyTokenChain, orderHandler.Create)
 orders.put('/:id', verifyTokenChain, orderHandler.Update)

@@ -2,20 +2,6 @@ import Client from '../database'
 import { Product } from '../models/products'
 
 export class DashboardQueries {
-  // Get all products that have been included in orders
-  async itemsInOrders(): Promise<{ name: string; price: number; order_id: string }[]> {
-    try {
-      const conn = await Client.connect()
-      const sql =
-        'SELECT name, price, order_id FROM products INNER JOIN order_items ON products.id = order_items.product_id'
-      const result = await conn.query(sql)
-      conn.release()
-      return result.rows
-    } catch (err) {
-      throw new Error(`unable get products and orders: ${err}`)
-    }
-  }
-
   // Get 5 most expensive products
   async mostExpensive(): Promise<Product[]> {
     try {
@@ -48,7 +34,7 @@ export class DashboardQueries {
   }
 
   // Get 5 most recent purchases
-  async mostRecent(user_id: number): Promise<Product[]> {
+  async mostRecent(user_id: string): Promise<Product[]> {
     try {
       const conn = await Client.connect()
       const sql = `

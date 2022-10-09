@@ -71,8 +71,8 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
       return
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
-    if (order.status.toLowerCase() == 'closed') {
-      throw new Error('Cannot add an item to a closed order.')
+    if (order.status.toLowerCase() == 'complete') {
+      throw new Error('Cannot add an item to a complete order.')
     }
   } catch (err) {
     res.status(401).json((err as Error).message)
@@ -106,8 +106,8 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
       return
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
-    if (order.status.toLowerCase() == 'closed') {
-      throw new Error('Cannot update an item in a closed order.')
+    if (order.status.toLowerCase() == 'complete') {
+      throw new Error('Cannot update an item in a complete order.')
     }
   } catch (err) {
     res.status(401).json((err as Error).message)
@@ -141,8 +141,8 @@ const deleteItem = async (req: express.Request, res: express.Response): Promise<
       return
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
-    if (order.status.toLowerCase() == 'closed') {
-      throw new Error('Cannot delete an item from a closed order.')
+    if (order.status.toLowerCase() == 'complete') {
+      throw new Error('Cannot delete an item from a complete order.')
     }
   } catch (err) {
     res.status(401).json((err as Error).message)

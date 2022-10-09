@@ -4,7 +4,6 @@ import dashboardHandler from '../../../handlers/dashboard/dashboardHandler'
 
 const dashboardRouter = express.Router()
 
-dashboardRouter.get('/products_in_orders', verifyTokenChain, dashboardHandler.productsInOrders)
 dashboardRouter.get('/most_expensive', verifyTokenChain, dashboardHandler.mostExpensive)
 dashboardRouter.get('/most_popular', verifyTokenChain, dashboardHandler.mostPopular)
 dashboardRouter.get('/most_recent', verifyTokenChain, dashboardHandler.mostRecent)

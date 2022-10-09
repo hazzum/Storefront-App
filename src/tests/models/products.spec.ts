@@ -17,6 +17,9 @@ const product3: Product = {
 }
 
 describe('Test Product model', () => {
+  let pID1: string | undefined
+  let pID2: string | undefined
+  let pID3: string | undefined
   describe('Function definitions', () => {
     it('should have an show all method', () => {
       expect(store.index).toBeDefined()
@@ -41,11 +44,15 @@ describe('Test Product model', () => {
 
   describe('Create Method', () => {
     it('Create a new product 1', async () => {
-      await expectAsync(store.create(product1)).toBeResolved()
+      const result = await store.create(product1)
+      pID1 = result.id
+      expect(result).toEqual({ id: pID1, ...product1 })
     })
 
     it('Create a new product 2', async () => {
-      await expectAsync(store.create(product2)).toBeResolved()
+      const result = await store.create(product2)
+      pID2 = result.id
+      expect(result).toEqual({ id: pID2, ...product2 })
     })
   })
 
@@ -57,22 +64,23 @@ describe('Test Product model', () => {
 
     it('create method should create a new product', async () => {
       const result = await store.create(product3)
-      expect(result).toEqual({ id: 3 as unknown as string, ...product3 })
+      pID3 = result.id
+      expect(result).toEqual({ id: pID3, ...product3 })
     })
 
     it('show one method should return the correct product', async () => {
-      const result = await store.getByID('1')
-      expect(result).toEqual({ id: 1 as unknown as string, ...product1 })
+      const result = await store.getByID(pID1 as string)
+      expect(result.id).toEqual(pID1)
     })
 
     it('show one method should return the correct product', async () => {
-      const result = await store.getByID('2')
-      expect(result).toEqual({ id: 2 as unknown as string, ...product2 })
+      const result = await store.getByID(pID2 as string)
+      expect(result.id).toEqual(pID2)
     })
 
     it('update method should update product info', async () => {
       const newProduct = {
-        id: 3 as unknown as string,
+        id: pID2,
         name: 'Lamp',
         price: 50
       }
@@ -81,9 +89,9 @@ describe('Test Product model', () => {
     })
 
     it('delete method should remove the product', async () => {
-      await store.delete('1')
-      const result = await store.getByID('1')
-      expect(result).toEqual(undefined as unknown as Product)
+      await store.delete(pID1 as string)
+      const result = await store.getByID(pID1 as string)
+      expect(result).toBeUndefined()
     })
   })
 })

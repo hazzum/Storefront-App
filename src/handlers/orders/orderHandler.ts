@@ -4,7 +4,7 @@ import { Order, OrderStore } from '../../models/orders'
 
 const oSchema: Joi.ObjectSchema = Joi.object({
   id: Joi.string().pattern(new RegExp('^[0-9]+$')),
-  status: Joi.any().valid('open', 'closed'),
+  status: Joi.any().valid('active', 'complete'),
   user_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
 })
 const store = new OrderStore()
@@ -15,9 +15,24 @@ const verifyUser = (verified_id: string, user_id: string): void => {
   }
 }
 
-const showAll = async (_req: express.Request, res: express.Response): Promise<void> => {
+//show all orders made by the current user
+const showAllCompleted = async (_req: express.Request, res: express.Response): Promise<void> => {
   try {
     const orders = await store.index(res.locals.verified_user_id)
+    if (!orders) {
+      res.status(404).json('No results found')
+      return
+    }
+    res.status(200).send(orders)
+  } catch (err) {
+    res.status(500).json((err as Error).message)
+  }
+}
+
+//show active orders that belong to the current user
+const showCurrent = async (_req: express.Request, res: express.Response): Promise<void> => {
+  try {
+    const orders = await store.showCurrent(res.locals.verified_user_id)
     if (!orders) {
       res.status(404).json('No results found')
       return
@@ -134,4 +149,4 @@ const Delete = async (req: express.Request, res: express.Response): Promise<void
   }
 }
 
-export default { showAll, showOne, Create, Update, Delete }
+export default { showAllCompleted, showCurrent, showOne, Create, Update, Delete }

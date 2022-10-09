@@ -3,19 +3,6 @@ import { DashboardQueries } from '../../services/dashboard'
 
 const dashboard = new DashboardQueries()
 
-const productsInOrders = async (_req: express.Request, res: express.Response) => {
-  try {
-    const products = await dashboard.itemsInOrders()
-    if (!products) {
-      res.status(404).json('No results found')
-      return
-    }
-    res.status(200).json(products)
-  } catch (err) {
-    res.status(500).json((err as Error).message)
-  }
-}
-
 const mostExpensive = async (_req: express.Request, res: express.Response) => {
   try {
     const products = await dashboard.mostExpensive()
@@ -55,4 +42,4 @@ const mostRecent = async (_req: express.Request, res: express.Response) => {
   }
 }
 
-export default { productsInOrders, mostExpensive, mostPopular, mostRecent }
+export default { mostExpensive, mostPopular, mostRecent }
