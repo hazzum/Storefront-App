@@ -1,13 +1,15 @@
 import express from 'express'
 import Joi from 'joi'
 import { Order, OrderStore } from '../../models/orders'
+import { CartQueries, CartItem } from '../../services/cart'
 
 const oSchema: Joi.ObjectSchema = Joi.object({
   id: Joi.string().pattern(new RegExp('^[0-9]+$')),
   status: Joi.any().valid('active', 'complete'),
   user_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
 })
-const store = new OrderStore()
+const store: OrderStore = new OrderStore()
+const cart: CartQueries = new CartQueries()
 
 const verifyUser = (verified_id: string, user_id: string): void => {
   if (verified_id != user_id) {
@@ -15,29 +17,67 @@ const verifyUser = (verified_id: string, user_id: string): void => {
   }
 }
 
-//show all orders made by the current user
-const showAllCompleted = async (_req: express.Request, res: express.Response): Promise<void> => {
+//show a list of detailed completed orders made by the current user
+const showAllCompleted = async (req: express.Request, res: express.Response): Promise<void> => {
+  //validate inputs
+  const { error } = oSchema.validate({ id: req.params.id })
+  if (error) {
+    res.status(400).send(error.message)
+    return
+  }
   try {
-    const orders = await store.index(res.locals.verified_user_id)
-    if (!orders) {
+    const detailed_orders: Array<{
+      order_id: string
+      order_status: string
+      order_details: CartItem[]
+    }> = []
+    const orders = await store.index(req.params.id)
+    if (!orders.length) {
       res.status(404).json('No results found')
       return
     }
-    res.status(200).send(orders)
+    for (const order of orders) {
+      const response = await cart.getItems(order.id as string)
+      detailed_orders.push({
+        order_id: order.id as string,
+        order_status: order.status,
+        order_details: response
+      })
+    }
+    res.status(200).send(detailed_orders)
   } catch (err) {
     res.status(500).json((err as Error).message)
   }
 }
 
-//show active orders that belong to the current user
-const showCurrent = async (_req: express.Request, res: express.Response): Promise<void> => {
+//show a list of detailed active orders that belong to the current user
+const showAllActive = async (req: express.Request, res: express.Response): Promise<void> => {
+  //validate inputs
+  const { error } = oSchema.validate({ id: req.params.id })
+  if (error) {
+    res.status(400).send(error.message)
+    return
+  }
   try {
-    const orders = await store.showCurrent(res.locals.verified_user_id)
+    const detailed_orders: Array<{
+      order_id: string
+      order_status: string
+      order_details: CartItem[]
+    }> = []
+    const orders = await store.showCurrent(req.params.id)
     if (!orders) {
       res.status(404).json('No results found')
       return
     }
-    res.status(200).send(orders)
+    for (const order of orders) {
+      const response = await cart.getItems(order.id as string)
+      detailed_orders.push({
+        order_id: order.id as string,
+        order_status: order.status,
+        order_details: response
+      })
+    }
+    res.status(200).send(detailed_orders)
   } catch (err) {
     res.status(500).json((err as Error).message)
   }
@@ -149,4 +189,4 @@ const Delete = async (req: express.Request, res: express.Response): Promise<void
   }
 }
 
-export default { showAllCompleted, showCurrent, showOne, Create, Update, Delete }
+export default { showAllCompleted, showAllActive, showOne, Create, Update, Delete }

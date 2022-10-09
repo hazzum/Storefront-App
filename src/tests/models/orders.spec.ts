@@ -8,14 +8,14 @@ const dashboard: DashboardQueries = new DashboardQueries()
 const store: OrderStore = new OrderStore()
 
 describe('Test Order model', () => {
-  let userID: string | undefined
-  let orderID1: string | undefined
-  let orderID2: string | undefined
+  let userID: string
+  let orderID1: string
+  let orderID2: string
   let order1: Order
   let order2: Order
-  let prodId: string | undefined
-  let prodId2: string | undefined
-  let orderId: string | undefined
+  let prodId: string
+  let prodId2: string
+  let orderId: string
   beforeAll(async () => {
     const userStore: UserStore = new UserStore()
     const { id } = await userStore.Sign_up({
@@ -24,7 +24,7 @@ describe('Test Order model', () => {
       user_name: 'mama',
       password: 'password_@@'
     })
-    userID = id
+    userID = id as string
     order1 = {
       status: 'active',
       user_id: userID?.toString()
@@ -66,13 +66,13 @@ describe('Test Order model', () => {
   describe('Create Method', () => {
     it('Create a new order 1', async () => {
       const result = await store.create(order1)
-      orderID1 = result.id
+      orderID1 = result.id as string
       expect(result).toEqual({ id: orderID1 as string, ...order1 })
     })
 
     it('Create a new order 2', async () => {
       const result = await store.create(order2)
-      orderID2 = result.id
+      orderID2 = result.id as string
       expect(result).toEqual({ id: orderID2 as string, ...order2 })
     })
   })
@@ -80,22 +80,22 @@ describe('Test Order model', () => {
   /////////////////////////////////////////////////////
   describe('Show orders methods', () => {
     it('index method should return a list of completed orders by user with id 1', async () => {
-      const result: Array<Order> | undefined = await store.index(userID as string)
+      const result: Array<Order> = await store.index(userID)
       expect(result[0].status).toEqual('complete')
     })
 
     it('showCurrent method should return active orders by user with id 1', async () => {
-      const result: Array<Order> | undefined = await store.showCurrent(userID as string)
+      const result: Array<Order> = await store.showCurrent(userID)
       expect(result[0].status).toEqual('active')
     })
 
     it('show one method should return the correct order', async () => {
-      const result: Order | undefined = await store.getByID(orderID1 as string)
+      const result: Order = await store.getByID(orderID1)
       expect(result.id).toEqual(orderID1)
     })
 
     it('show one method should return the correct order', async () => {
-      const result: Order | undefined = await store.getByID(orderID2 as string)
+      const result: Order = await store.getByID(orderID2)
       expect(result.id).toEqual(orderID2)
     })
   })
@@ -103,17 +103,17 @@ describe('Test Order model', () => {
   /////////////////////////////////////////////////////
   describe('Update and delete methods', () => {
     it('update method should update order status', async () => {
-      const newOrder: Order | undefined = {
+      const newOrder: Order = {
         id: orderID2,
         status: 'active'
       }
-      const result: Order | undefined = await store.update(newOrder)
+      const result: Order = await store.update(newOrder)
       expect(result.status).toEqual(newOrder.status)
     })
 
     it('delete method should remove the order', async () => {
-      await store.delete(orderID1 as string)
-      const result: Order | undefined = await store.getByID(orderID1 as string)
+      await store.delete(orderID1)
+      const result: Order = await store.getByID(orderID1)
       expect(result).toBeUndefined()
     })
   })
@@ -127,24 +127,24 @@ describe('Test Order model', () => {
           name: 'Gum',
           price: 10
         })
-        prodId = id
+        prodId = id as string
       }
       {
         const { id } = await productStore.create({
           name: 'Milkshake',
           price: 30
         })
-        prodId2 = id
+        prodId2 = id as string
       }
       {
         const { id } = await store.create({
           status: 'active',
           user_id: userID
         })
-        orderId = id
+        orderId = id as string
       }
     })
-    let itemId: string | undefined
+    let itemId: string
     it('adding a new item to order 1', async () => {
       const newItem: Item = {
         quantity: 5,
@@ -152,7 +152,7 @@ describe('Test Order model', () => {
         product_id: prodId
       }
       const result = await store.addItem(newItem)
-      itemId = result.id
+      itemId = result.id as string
       expect({ product_id: result.product_id, quantity: result.quantity }).toEqual({
         product_id: newItem.product_id?.toString(),
         quantity: newItem.quantity
@@ -166,7 +166,7 @@ describe('Test Order model', () => {
         product_id: prodId2
       }
       const result = await store.addItem(newItem)
-      itemId = result.id
+      itemId = result.id as string
       expect({ product_id: result.product_id, quantity: result.quantity }).toEqual({
         product_id: newItem.product_id?.toString(),
         quantity: newItem.quantity
@@ -183,7 +183,7 @@ describe('Test Order model', () => {
     })
 
     it('remove the previous item', async () => {
-      const result = await store.removeItem(itemId as string)
+      const result = await store.removeItem(itemId)
       expect(result.id).toEqual(itemId)
     })
   })
@@ -198,7 +198,7 @@ describe('Test Order model', () => {
 
     describe('Get all Order Items', () => {
       it('should return all Items in a given order', async () => {
-        await expectAsync(cart.getItems(orderId as string)).toBeResolved()
+        await expectAsync(cart.getItems(orderId)).toBeResolved()
       })
     })
   })
@@ -235,7 +235,7 @@ describe('Test Order model', () => {
 
     describe('Most recent purchases', () => {
       it('should return 5 most recent purchases by a certain user', async () => {
-        await expectAsync(dashboard.mostRecent(userID as string)).toBeResolved()
+        await expectAsync(dashboard.mostRecent(userID)).toBeResolved()
       })
     })
   })

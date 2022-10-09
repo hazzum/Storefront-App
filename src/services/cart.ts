@@ -1,16 +1,15 @@
 import Client from '../database'
 
+export type CartItem = {
+  item_id: string
+  product_id: string
+  name: string
+  price: number
+  quantity: number
+}
 export class CartQueries {
   //get all items that belongs to a single order
-  async getItems(order_id: string): Promise<
-    {
-      item_id: string
-      product_id: string
-      name: string
-      price: number
-      quantity: number
-    }[]
-  > {
+  async getItems(order_id: string): Promise<CartItem[]> {
     try {
       const connect = await Client.connect()
       const sql = `

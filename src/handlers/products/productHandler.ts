@@ -12,7 +12,7 @@ const store = new ProductStore()
 const showAll = async (_req: express.Request, res: express.Response): Promise<void> => {
   try {
     const products = await store.index()
-    if (!products) {
+    if (!products.length) {
       res.status(404).json('No results found')
       return
     }
@@ -48,7 +48,6 @@ const Create = async (req: express.Request, res: express.Response): Promise<void
   }
   //validate inputs
   const { error } = pSchema.validate(product)
-  console.log(error)
   if (error) {
     res.status(400).send(error.message)
     return

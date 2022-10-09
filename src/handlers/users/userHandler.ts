@@ -57,7 +57,7 @@ const Sign_in = async (req: express.Request, res: express.Response): Promise<voi
 const showAll = async (_req: express.Request, res: express.Response): Promise<void> => {
   try {
     const users = await store.index()
-    if (!users) {
+    if (!users.length) {
       res.status(404).json('No results found')
       return
     }

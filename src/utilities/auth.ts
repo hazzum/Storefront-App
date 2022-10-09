@@ -1,12 +1,6 @@
 import express from 'express'
-import jwt, { UserIDJwtPayload } from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 const secret = process.env.TOKEN_SECRET as unknown as string
-
-declare module 'jsonwebtoken' {
-  export interface UserIDJwtPayload extends jwt.JwtPayload {
-    id: string
-  }
-}
 
 export const encodeAuthToken = (user_id: string, user_name: string): string => {
   return jwt.sign({ id: user_id, name: user_name }, secret, { expiresIn: '24h' })
@@ -32,7 +26,7 @@ const getAuthToken = (req: express.Request, res: express.Response, next: () => v
 
 const verifyAuthToken = (_req: express.Request, res: express.Response, next: () => void): void => {
   try {
-    const { id } = <UserIDJwtPayload>jwt.verify(res.locals.token, secret)
+    const { id } = jwt.verify(res.locals.token, secret) as JwtPayload
     res.locals.verified_user_id = id.toString()
     next()
   } catch (err) {

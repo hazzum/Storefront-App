@@ -6,7 +6,7 @@ const dashboard = new DashboardQueries()
 const mostExpensive = async (_req: express.Request, res: express.Response) => {
   try {
     const products = await dashboard.mostExpensive()
-    if (!products) {
+    if (!products.length) {
       res.status(404).json('No results found')
       return
     }
@@ -19,7 +19,7 @@ const mostExpensive = async (_req: express.Request, res: express.Response) => {
 const mostPopular = async (_req: express.Request, res: express.Response) => {
   try {
     const products = await dashboard.mostPopular()
-    if (!products) {
+    if (!products.length) {
       res.status(404).json('No results found')
       return
     }
@@ -32,7 +32,7 @@ const mostPopular = async (_req: express.Request, res: express.Response) => {
 const mostRecent = async (_req: express.Request, res: express.Response) => {
   try {
     const products = await dashboard.mostRecent(res.locals.verified_user_id)
-    if (!products) {
+    if (!products.length) {
       res.status(404).json('No results found')
       return
     }

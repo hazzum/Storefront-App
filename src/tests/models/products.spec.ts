@@ -1,25 +1,24 @@
 import { Product, ProductStore } from '../../models/products'
 const store: ProductStore = new ProductStore()
 
-const product1: Product = {
-  name: 'King-sized Bed',
-  price: 800
-}
-
-const product2: Product = {
-  name: 'Coffee Table',
-  price: 100
-}
-
-const product3: Product = {
-  name: 'Kitchen Sink',
-  price: 150
-}
-
 describe('Test Product model', () => {
-  let pID1: string | undefined
-  let pID2: string | undefined
-  let pID3: string | undefined
+  let pID1: string
+  let pID2: string
+  let pID3: string
+  const product1: Product = {
+    name: 'King-sized Bed',
+    price: 800
+  }
+
+  const product2: Product = {
+    name: 'Coffee Table',
+    price: 100
+  }
+
+  const product3: Product = {
+    name: 'Kitchen Sink',
+    price: 150
+  }
   describe('Function definitions', () => {
     it('should have an show all method', () => {
       expect(store.index).toBeDefined()
@@ -45,13 +44,13 @@ describe('Test Product model', () => {
   describe('Create Method', () => {
     it('Create a new product 1', async () => {
       const result = await store.create(product1)
-      pID1 = result.id
+      pID1 = result.id as string
       expect(result).toEqual({ id: pID1, ...product1 })
     })
 
     it('Create a new product 2', async () => {
       const result = await store.create(product2)
-      pID2 = result.id
+      pID2 = result.id as string
       expect(result).toEqual({ id: pID2, ...product2 })
     })
   })
@@ -64,17 +63,17 @@ describe('Test Product model', () => {
 
     it('create method should create a new product', async () => {
       const result = await store.create(product3)
-      pID3 = result.id
+      pID3 = result.id as string
       expect(result).toEqual({ id: pID3, ...product3 })
     })
 
     it('show one method should return the correct product', async () => {
-      const result = await store.getByID(pID1 as string)
+      const result = await store.getByID(pID1)
       expect(result.id).toEqual(pID1)
     })
 
     it('show one method should return the correct product', async () => {
-      const result = await store.getByID(pID2 as string)
+      const result = await store.getByID(pID2)
       expect(result.id).toEqual(pID2)
     })
 
@@ -89,8 +88,8 @@ describe('Test Product model', () => {
     })
 
     it('delete method should remove the product', async () => {
-      await store.delete(pID1 as string)
-      const result = await store.getByID(pID1 as string)
+      await store.delete(pID1)
+      const result = await store.getByID(pID1)
       expect(result).toBeUndefined()
     })
   })

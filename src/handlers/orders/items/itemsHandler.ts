@@ -41,7 +41,7 @@ const showAll = async (req: express.Request, res: express.Response): Promise<voi
   //handle database operation
   try {
     const items = await cart.getItems(orderID)
-    if (!items) {
+    if (!items.length) {
       res.status(404).json('No results found')
       return
     }
@@ -72,7 +72,8 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
     if (order.status.toLowerCase() == 'complete') {
-      throw new Error('Cannot add an item to a complete order.')
+      res.status(400).json('Cannot add an item to a complete order.')
+      return
     }
   } catch (err) {
     res.status(401).json((err as Error).message)
@@ -80,8 +81,8 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
   }
   //handle database operation
   try {
-    const newOrder = await store.addItem(item)
-    res.status(200).send(newOrder)
+    const newItem = await store.addItem(item)
+    res.status(200).send(newItem)
   } catch (err) {
     res.status(500).json((err as Error).message)
   }
@@ -107,7 +108,8 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
     if (order.status.toLowerCase() == 'complete') {
-      throw new Error('Cannot update an item in a complete order.')
+      res.status(400).json('Cannot update an item in a complete order.')
+      return
     }
   } catch (err) {
     res.status(401).json((err as Error).message)
@@ -142,7 +144,8 @@ const deleteItem = async (req: express.Request, res: express.Response): Promise<
     }
     verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
     if (order.status.toLowerCase() == 'complete') {
-      throw new Error('Cannot delete an item from a complete order.')
+      res.status(400).json('Cannot delete an item from a complete order.')
+      return
     }
   } catch (err) {
     res.status(401).json((err as Error).message)

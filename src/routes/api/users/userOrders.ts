@@ -5,6 +5,6 @@ import { verifyUserChain } from '../../../utilities/auth'
 const userOrders = express.Router()
 
 userOrders.get('/:id/orders/completed', verifyUserChain, orderHandler.showAllCompleted)
-userOrders.get('/:id/orders/active', verifyUserChain, orderHandler.showCurrent)
+userOrders.get('/:id/orders/active', verifyUserChain, orderHandler.showAllActive)
 
 export default userOrders

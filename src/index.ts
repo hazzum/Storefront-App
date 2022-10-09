@@ -14,13 +14,13 @@ const corsOptions = {
 // create an instance server
 const app: express.Application = express()
 //Middlewares
-//Security
+//Security middleware
 app.use(helmet())
-//CORS
+//CORS middleware
 app.use(cors(corsOptions))
-//Json
+//Json bodyparser
 app.use(bodyParser.json())
-//Logger
+//Logger middleware
 app.use(morgan('short'))
 //Top-level Routes
 app.use('/api', routes)
