@@ -240,12 +240,12 @@ describe('Test orders endpoints response', () => {
 
   describe('Test /dashboard endpoints response', () => {
     it('/most_expensive endpoint returns a list of 5 most expensive products', async () => {
-      const response = await request.get('/api/dashboard/most_expensive').set(authHeader)
+      const response = await request.get('/api/dashboard/most_expensive')
       expect(response.status).toBe(200)
     })
 
     it('/most_popular endpoint returns a list of 5 most popular products', async () => {
-      const response = await request.get('/api/dashboard/most_popular').set(authHeader)
+      const response = await request.get('/api/dashboard/most_popular')
       expect(response.status).toBe(200)
     })
 

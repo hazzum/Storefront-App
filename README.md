@@ -45,7 +45,8 @@ To do this, there are two options:
 - Install PostgreSQL locally, manually set up a user account, and manually create `storefront` and `storefront_test` databases.
 - Or, install Docker, run the command `docker-compose up -d` and it will automatically set up a containerized database server, using the variables saved in `.env`, and it will run in the background.
 ### 5- Play around with the application
-Run any of the scripts included in the `package.json` file, which include:
+The node.js application runs on port `3000`<br />
+Run any of the scripts included in the `package.json` file:<br />
 Build script:                   `npm run build` <br />
 Running dev version script:     `npm run dev` <br />
 Testing script:                 `npm run test` <br />

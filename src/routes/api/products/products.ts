@@ -4,8 +4,8 @@ import productHandler from '../../../handlers/products/productHandler'
 
 const products = express.Router()
 
-products.get('/', verifyTokenChain, productHandler.showAll)
-products.get('/:id', verifyTokenChain, productHandler.showOne)
+products.get('/', productHandler.showAll)
+products.get('/:id', productHandler.showOne)
 products.post('/', verifyTokenChain, productHandler.Create)
 products.put('/:id', verifyTokenChain, productHandler.Update)
 products.delete('/:id', verifyTokenChain, productHandler.Delete)

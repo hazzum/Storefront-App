@@ -57,7 +57,7 @@ describe('Test /api/products endpoints response', () => {
     expect(response.status).toBe(200)
   })
 
-  it('Trying to add a product with bad values returns a 400 erorr', async () => {
+  it('Trying to add a product with bad values returns a 400 error', async () => {
     const response = await request
       .post('/api/products')
       .set(authHeader)
@@ -66,18 +66,13 @@ describe('Test /api/products endpoints response', () => {
   })
 
   it('Get a list of all products', async () => {
-    const response = await request.get('/api/products').set(authHeader)
+    const response = await request.get('/api/products')
     expect(response.status).toBe(200)
   })
 
-  it('Get a certain product', async () => {
-    const response = await request.get(`/api/products/${pID2}`).set(authHeader)
+  it('Show a certain product', async () => {
+    const response = await request.get(`/api/products/${pID2}`)
     expect(response.status).toBe(200)
-  })
-
-  it('Making a request with no auth header returns a 401 code', async () => {
-    const response = await request.get(`/api/products/${pID1}`)
-    expect(response.status).toBe(401)
   })
 
   it(`Updating a product's info`, async () => {
@@ -87,6 +82,11 @@ describe('Test /api/products endpoints response', () => {
     }
     const response = await request.put(`/api/products/${pID3}`).set(authHeader).send(newProduct)
     expect(response.status).toBe(200)
+  })
+
+  it(`Trying to edit products data with no auth token returns a 401 error`, async () => {
+    const response = await request.delete(`/api/products/${pID1}`)
+    expect(response.status).toBe(401)
   })
 
   it(`Deleting a product`, async () => {
