@@ -1,7 +1,8 @@
 import supertest from 'supertest'
 import { User } from '../../models/users'
 import { Product } from '../../models/products'
-import { Order, Item } from '../../models/orders'
+import { Order } from '../../models/orders'
+import { Item } from '../../models/order_items'
 import app from '../../index'
 
 // create a request object

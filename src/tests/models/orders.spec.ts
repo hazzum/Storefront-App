@@ -1,4 +1,5 @@
-import { Item, Order, OrderStore } from '../../models/orders'
+import { Order, OrderStore } from '../../models/orders'
+import { Item, ItemStore } from '../../models/order_items'
 import { UserStore } from '../../models/users'
 import { ProductStore } from '../../models/products'
 import { DashboardQueries } from '../../services/dashboard'
@@ -6,6 +7,7 @@ import { CartQueries } from '../../services/cart'
 const cart: CartQueries = new CartQueries()
 const dashboard: DashboardQueries = new DashboardQueries()
 const store: OrderStore = new OrderStore()
+const itemStore: ItemStore = new ItemStore()
 
 describe('Test Order model', () => {
   let userID: string
@@ -151,7 +153,7 @@ describe('Test Order model', () => {
         order_id: orderId,
         product_id: prodId
       }
-      const result = await store.addItem(newItem)
+      const result = await itemStore.addItem(newItem)
       itemId = result.id as string
       expect({ product_id: result.product_id, quantity: result.quantity }).toEqual({
         product_id: newItem.product_id?.toString(),
@@ -165,7 +167,7 @@ describe('Test Order model', () => {
         order_id: orderId,
         product_id: prodId2
       }
-      const result = await store.addItem(newItem)
+      const result = await itemStore.addItem(newItem)
       itemId = result.id as string
       expect({ product_id: result.product_id, quantity: result.quantity }).toEqual({
         product_id: newItem.product_id?.toString(),
@@ -178,12 +180,12 @@ describe('Test Order model', () => {
         id: itemId,
         quantity: 10
       }
-      const result = await store.updateQuantity(newItem)
+      const result = await itemStore.updateQuantity(newItem)
       expect(result.quantity).toEqual(newItem.quantity)
     })
 
     it('remove the previous item', async () => {
-      const result = await store.removeItem(itemId)
+      const result = await itemStore.removeItem(itemId)
       expect(result.id).toEqual(itemId)
     })
   })

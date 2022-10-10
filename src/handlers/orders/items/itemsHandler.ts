@@ -1,6 +1,7 @@
 import express from 'express'
 import Joi from 'joi'
-import { Item, OrderStore } from '../../../models/orders'
+import { OrderStore } from '../../../models/orders'
+import { Item, ItemStore } from '../../../models/order_items'
 import { CartQueries } from '../../../services/cart'
 
 const iSchema: Joi.ObjectSchema = Joi.object({
@@ -10,6 +11,7 @@ const iSchema: Joi.ObjectSchema = Joi.object({
   product_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
 })
 const store = new OrderStore()
+const itemStore = new ItemStore()
 const cart = new CartQueries()
 
 const verifyUser = (verified_id: string, user_id: string): void => {
@@ -81,7 +83,7 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
   }
   //handle database operation
   try {
-    const newItem = await store.addItem(item)
+    const newItem = await itemStore.addItem(item)
     res.status(200).send(newItem)
   } catch (err) {
     res.status(500).json((err as Error).message)
@@ -117,7 +119,7 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
   }
   //handle database operation
   try {
-    const updated = await store.updateQuantity(item)
+    const updated = await itemStore.updateQuantity(item)
     if (!updated) {
       res.status(404).json('No results found to be updated')
       return
@@ -153,7 +155,7 @@ const deleteItem = async (req: express.Request, res: express.Response): Promise<
   }
   //handle database operation
   try {
-    const deleted = await store.removeItem(req.params.item)
+    const deleted = await itemStore.removeItem(req.params.item)
     if (!deleted) {
       res.status(404).json('No results found to be deleted')
       return
