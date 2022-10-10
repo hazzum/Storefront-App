@@ -44,7 +44,10 @@ Here's an example of how you should configure your `database.json` file:
 To do this, there are two options:
 - Install PostgreSQL locally, manually set up a user account, and manually create `storefront` and `storefront_test` databases.
 - Or, install Docker, run the command `docker-compose up -d` and it will automatically set up a containerized database server, using the variables saved in `.env`, and it will run in the background.
-### 5- Play around with the application
+### 5- Run database migrations
+- You should run the database migrations by running the command `db-migrate up`
+- You can undo one database migration by running the command `db-migrate down`, or reset the database by running `db-migrate reset`
+### 6- Play around with the application
 - The node.js application runs on port `3000`<br />
 Run any of the scripts included in the `package.json` file:<br />
 - Build script:                   `npm run build` <br />
