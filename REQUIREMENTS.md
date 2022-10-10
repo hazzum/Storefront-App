@@ -51,37 +51,37 @@
 `http://localhost:5000`
 ## API Endpoints
 ### Products
-* **URLs**
-    `/api/products/<product_id>`
-    `/api/dashboard/most_expensive`
-    `/api/dashboard/most_popular`
-* **Methods:**
-    `GET`|`POST`|`PUT`|`DELETE`
-* **URL Params**
-    **Optional:**
+* **URLs**<br />
+    `/api/products/<product_id>`<br />
+    `/api/dashboard/most_expensive`<br />
+    `/api/dashboard/most_popular`<br />
+* **Methods:**<br />
+    `GET`|`POST`|`PUT`|`DELETE`<br />
+* **URL Params**<br />
+    **Optional:**<br />
     `product_id:[string]`
-* **Request body**
-    **Create:**
+* **Request body**<br />
+    **Create:**<br />
     `name:[string]`<br />
     `price:[number]`<br />
-    **Update:**
+    **Update:**<br />
     `id:[string]`<br />
     `name:[string]`<br />
     `price:[number]`<br />
-* **Success Response:**
+* **Success Response:**<br />
     * **Code:** 200 <br />
-        **Content:** `Product or Array<Product>`
-* **Error Response:**
+        **Content:** `Product or Array<Product>`<br />
+**Error Response:**<br />
     * **Code:** 404 <br />
-        **Content:** `{ error : "No results found" }`
+        **Content:** `{ error : "No results found" }`<br />
     * **Code:** 401 <br />
-        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`  
+        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`<br />  
     * **Code:** 400 <br />
-        **Content:** `{ error : "Invalid Data" }`  
+        **Content:** `{ error : "Invalid Data" }` <br /> 
     * **Code:** 500 <br />
-        **Content:** `{ error : "Internal server error" }` 
-* **Satisfied requirements:**
-Products:
+        **Content:** `{ error : "Internal server error" }` <br />
+**Satisfied requirements:**<br />
+**Products:**<br />
 - Index: GET `/api/products/`
 - Show: GET `/api/products/<product_id>`
 - Create [token required]: POST `/api/products/`
@@ -91,106 +91,104 @@ Products:
 - Get a list of 5 most popular products: GET `/api/dashboard/most_popular`
 
 ### Users
-* **URLs**
+* **URLs**<br />
     `/api/users/<user_id>`<br />
     `/api/users/sign_up`<br />
     `/api/users/sign_in`<br />
     `/api/users/<user_id>/orders/active`<br />
     `/api/users/<user_id>/orders/completed`<br />
-
-* **Methods:**
-    `GET`|`POST`|`PUT`|`DELETE`
-* **URL Params**
-    **Optional:**
-    `user_id:[string]`
-* **Request body**
-    **Sign up:**
+* **Methods:**<br />
+    `GET`|`POST`|`PUT`|`DELETE`<br />
+* **URL Params**<br />
+    **Optional:**<br />
+    `user_id:[string]`<br />
+* **Request body**<br />
+    **Sign up:**<br />
     `first_name:[string]`<br />
     `last_name:[string]`<br />
     `user_name:[string]`<br />
     `password:[string]`<br />
-    **Sign up:**
+    **Sign up:**<br />
     `user_name:[string]`<br />
     `password:[string]`<br />
-    **Update:**
+    **Update:**<br />
     `id:[string]`<br />
     `first_name:[string]`<br />
     `last_name:[string]`<br />
     `user_name:[string]`<br />
-* **Success Response:**
+* **Success Response:**<br />
     * **Code:** 200 <br />
-        **Content:** `User or Array<User> (Index, show, update, delete)`
+        **Content:** `User or Array<User> (Index, show, update, delete)`<br />
     * **Code:** 200 <br />
-        **Content:** `Authorization Token along with a user ID (sign up, sign in)`
+        **Content:** `Authorization Token along with a user ID (sign up, sign in)`<br />
     * **Code:** 200 <br />
-        **Content:** `List of active or completed orders in the form Array<{order_id: string, order_status: string, order_details: Array<CartItems>}>`
-* **Error Response:**
+        **Content:** `List of active or completed orders in the form Array<{order_id: string, order_status: string, order_details: Array<CartItems>}>`<br />
+* **Error Response:**<br />
     * **Code:** 404 <br />
-        **Content:** `{ error : "No results found" }`
+        **Content:** `{ error : "No results found" }`<br />
     * **Code:** 401 <br />
-        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`  
+        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`  <br />
     * **Code:** 400 <br />
-        **Content:** `{ error : "Invalid Data" }`  
-
+        **Content:** `{ error : "Invalid Data" }`  <br />
     * **Code:** 500 <br />
-        **Content:** `{ error : "Internal server error" }` 
-* **Satisfied requirements:**
-Users:
+        **Content:** `{ error : "Internal server error" }` <br />
+* **Satisfied requirements:**<br />
+    **Users:**<br />
 - Index [token required]: GET `/api/users`
 - Show  [token and correct id required]: GET `/api/users/<user_id>`
 - Sign up: POST `/api/users/sign_up`
 - Sign in: POST `/api/users/sign_in`
 - Update [token and correct id required]: PUT `/api/users/<user_id>`
 - Delete [token and correct id required]: DELETE `/api/users/<user_id>`
-Products:
+    **Products:**<br />
 - Detailed Current Active Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/active`
 - Detailed List of Completed Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/completed`
 
 
-### Orders
-* **URLs**
-    `/api/orders/<order_id>`
-    `/api/orders/<order_id>/items/<item_id>`
-    `/api/dashboard/most_recent`
-* **Methods:**
-    `GET`|`POST`|`PUT`|`DELETE`
-* **URL Params**
-    **Optional:**
-    `order_id:[string]`
-    `item_id:[string]`
-* **Request body**
-    **Create:**
+### Orders<br />
+* **URLs**<br />
+    `/api/orders/<order_id>`<br />
+    `/api/orders/<order_id>/items/<item_id>`<br />
+    `/api/dashboard/most_recent`<br />
+* **Methods:**<br />
+    `GET`|`POST`|`PUT`|`DELETE`<br />
+* **URL Params**<br />
+    **Optional:**<br />
+    `order_id:[string]`<br />
+    `item_id:[string]`<br />
+* **Request body**<br />
+    **Create:**<br />
     `status:[string]`<br />
     `user_id:[string]`<br />
-    **Update:**
+    **Update:**<br />
     `id:[string]`<br />
     `status:[string]`<br />
     `user_id:[string]`<br />
-    **Add new item:**
+    **Add new item:**<br />
     `quantity:[number]`<br />
     `order_id:[string]`<br />
     `product_id:[string]`<br />
-    **Update item quantity:**
+    **Update item quantity:**<br />
     `id:[string]`<br />
     `quantity:[number]`<br />
-* **Success Response:**
+* **Success Response:**<br />
     * **Code:** 200 <br />
-        **Content:** `Order (show, update, delete)`
+        **Content:** `Order (show, update, delete)`<br />
     * **Code:** 200 <br />
-        **Content:** `Array<CartItem> (show order items, most recent purchases)`
+        **Content:** `Array<CartItem> (show order items, most recent purchases)`<br />
     * **Code:** 200 <br />
-        **Content:** `Item (add item, update item, delete item)`
-* **Error Response:**
+        **Content:** `Item (add item, update item, delete item)`<br />
+* **Error Response:**<br />
     * **Code:** 404 <br />
-        **Content:** `{ error : "No results found" }`
+        **Content:** `{ error : "No results found" }`<br />
     * **Code:** 401 <br />
-        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`  
+        **Content:** `{ error : "Not authorized (no token was sent or invalid token)" }`  <br />
     * **Code:** 400 <br />
-        **Content:** `{ error : "Invalid Data" }`  
+        **Content:** `{ error : "Invalid Data" }`  <br />
     * **Code:** 500 <br />
-        **Content:** `{ error : "Internal server error" }` 
+        **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**
-Orders:
+    **Orders:**<br />
 - Show [token and correct user id required]: GET `/api/orders/<order_id>`
 - Show order details [token and correct user id required]: GET `/api/orders/<order_id>/items`
 - Create [token required]: POST `/api/orders`
