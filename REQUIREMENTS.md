@@ -58,20 +58,20 @@
 * **Methods:**<br />
     `GET`|`POST`|`PUT`|`DELETE`<br />
 * **URL Params**<br />
-    **Optional:**<br />
+    * **Optional:**<br />
     `product_id:[string]`
 * **Request body**<br />
-    **Create:**<br />
+    * **Create:**<br />
     `name:[string]`<br />
     `price:[number]`<br />
-    **Update:**<br />
+    * **Update:**<br />
     `id:[string]`<br />
     `name:[string]`<br />
     `price:[number]`<br />
 * **Success Response:**<br />
     * **Code:** 200 <br />
         **Content:** `Product or Array<Product>`<br />
-**Error Response:**<br />
+* **Error Response:**<br />
     * **Code:** 404 <br />
         **Content:** `{ error : "No results found" }`<br />
     * **Code:** 401 <br />
@@ -80,8 +80,8 @@
         **Content:** `{ error : "Invalid Data" }` <br /> 
     * **Code:** 500 <br />
         **Content:** `{ error : "Internal server error" }` <br />
-**Satisfied requirements:**<br />
-**Products:**<br />
+* **Satisfied requirements:**<br />
+    * **Products:**<br />
 - Index: GET `/api/products/`
 - Show: GET `/api/products/<product_id>`
 - Create [token required]: POST `/api/products/`
@@ -100,18 +100,18 @@
 * **Methods:**<br />
     `GET`|`POST`|`PUT`|`DELETE`<br />
 * **URL Params**<br />
-    **Optional:**<br />
+    * **Optional:**<br />
     `user_id:[string]`<br />
 * **Request body**<br />
-    **Sign up:**<br />
+    * **Sign up:**<br />
     `first_name:[string]`<br />
     `last_name:[string]`<br />
     `user_name:[string]`<br />
     `password:[string]`<br />
-    **Sign up:**<br />
+    * **Sign up:**<br />
     `user_name:[string]`<br />
     `password:[string]`<br />
-    **Update:**<br />
+    * **Update:**<br />
     `id:[string]`<br />
     `first_name:[string]`<br />
     `last_name:[string]`<br />
@@ -133,14 +133,14 @@
     * **Code:** 500 <br />
         **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**<br />
-    **Users:**<br />
+    * **Users:**<br />
 - Index [token required]: GET `/api/users`
 - Show  [token and correct id required]: GET `/api/users/<user_id>`
 - Sign up: POST `/api/users/sign_up`
 - Sign in: POST `/api/users/sign_in`
 - Update [token and correct id required]: PUT `/api/users/<user_id>`
 - Delete [token and correct id required]: DELETE `/api/users/<user_id>`
-    **Products:**<br />
+    * **Products:**<br />
 - Detailed Current Active Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/active`
 - Detailed List of Completed Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/completed`
 
@@ -153,22 +153,22 @@
 * **Methods:**<br />
     `GET`|`POST`|`PUT`|`DELETE`<br />
 * **URL Params**<br />
-    **Optional:**<br />
+    * **Optional:**<br />
     `order_id:[string]`<br />
     `item_id:[string]`<br />
 * **Request body**<br />
-    **Create:**<br />
+    * **Create:**<br />
     `status:[string]`<br />
     `user_id:[string]`<br />
-    **Update:**<br />
+    * **Update:**<br />
     `id:[string]`<br />
     `status:[string]`<br />
     `user_id:[string]`<br />
-    **Add new item:**<br />
+    * **Add new item:**<br />
     `quantity:[number]`<br />
     `order_id:[string]`<br />
     `product_id:[string]`<br />
-    **Update item quantity:**<br />
+    * **Update item quantity:**<br />
     `id:[string]`<br />
     `quantity:[number]`<br />
 * **Success Response:**<br />
@@ -188,7 +188,7 @@
     * **Code:** 500 <br />
         **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**
-    **Orders:**<br />
+    * **Orders:**<br />
 - Show [token and correct user id required]: GET `/api/orders/<order_id>`
 - Show order details [token and correct user id required]: GET `/api/orders/<order_id>/items`
 - Create [token required]: POST `/api/orders`
