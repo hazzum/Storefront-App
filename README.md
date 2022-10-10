@@ -24,20 +24,20 @@ TOKEN_SECRET=smokeweedeveryday
 Here's an example of how you should configure your `database.json` file:
 ```
 {
-    "dev": {
-      "driver": "pg",
-      "host": "127.0.0.1",
-      "database": {"ENV": "POSTGRES_DB"},
-      "user": {"ENV": "POSTGRES_USER"},
-      "password": {"ENV": "POSTGRES_PASSWORD"}
-    },
-    "test": {
-      "driver": "pg",
-      "host": "127.0.0.1",
-      "database": {"ENV": "POSTGRES_DB_TEST"},
-      "user": {"ENV": "POSTGRES_USER"},
-      "password": {"ENV": "POSTGRES_PASSWORD"}
-    }
+  "dev": {
+    "driver": "pg",
+    "host": {"ENV":"POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"}
+  },
+  "test": {
+    "driver": "pg",
+    "host": {"ENV":"POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB_TEST"},
+    "user": {"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"}
+  }
 }
 ```
 ### 4- Set up the database driver and connect it to the application
