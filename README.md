@@ -20,24 +20,24 @@ BCRYPT_PASSWORD=bada-bing-bada-boom
 SALT_ROUNDS=10
 TOKEN_SECRET=smokeweedeveryday
 ```
-### 3- Create a `database.json` file to store database configuration, the relevant database variables should match those of the `.env` file.
+### 3- Create a `database.json` file to store database configuration using environment variables from `.env`
 Here's an example of how you should configure your `database.json` file:
 ```
 {
-  "dev": {
-    "driver": "pg",
-    "host": "127.0.0.1",
-    "database": "storefront",
-    "user": "storefront_user",
-    "password": "password"
-  },
-  "test": {
-    "driver": "pg",
-    "host": "127.0.0.1",
-    "database": "storefront_test",
-    "user": "storefront_user",
-    "password": "password"
-  }
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": {"ENV": "POSTGRES_DB"},
+      "user": {"ENV": "POSTGRES_USER"},
+      "password": {"ENV": "POSTGRES_PASSWORD"}
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": {"ENV": "POSTGRES_DB_TEST"},
+      "user": {"ENV": "POSTGRES_USER"},
+      "password": {"ENV": "POSTGRES_PASSWORD"}
+    }
 }
 ```
 ### 4- Set up the database driver and connect it to the application
