@@ -140,7 +140,7 @@
         * Sign in: POST `/api/users/sign_in`
         * Update [token and correct id required]: PUT `/api/users/<user_id>`
         * Delete [token and correct id required]: DELETE `/api/users/<user_id>`
-    * **Products:**<br />
+    * **Orders:**<br />
         * Detailed Current Active Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/active`
         * Detailed List of Completed Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/completed`
 
