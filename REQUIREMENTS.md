@@ -12,7 +12,7 @@
 |--|--|--
 |serial primary key| string| foreign key references(users)
 ### order_items
-|id| quantity | order_id | product_id | constriants
+|id| quantity | order_id | product_id | constraints
 |--|--|--|--|--
 |serial primary key| string| foreign key references(orders) | foreign key references(products)| UNIQUE(order_id, product_id)
 
