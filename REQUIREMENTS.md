@@ -82,13 +82,13 @@
         **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**<br />
     * **Products:**<br />
-- Index: GET `/api/products/`
-- Show: GET `/api/products/<product_id>`
-- Create [token required]: POST `/api/products/`
-- Update [token required]: PUT `/api/products/<product_id>`
-- Delete [token required]: DELETE `/api/products/<product_id>`
-- Get a list of 5 most expensive products: GET `/api/dashboard/most_expensive`
-- Get a list of 5 most popular products: GET `/api/dashboard/most_popular`
+        * Index: GET `/api/products/`
+        * Show: GET `/api/products/<product_id>`
+        * Create [token required]: POST `/api/products/`
+        * Update [token required]: PUT `/api/products/<product_id>`
+        * Delete [token required]: DELETE `/api/products/<product_id>`
+        * Get a list of 5 most expensive products: GET `/api/dashboard/most_expensive`
+        * Get a list of 5 most popular products: GET `/api/dashboard/most_popular`
 
 ### Users
 * **URLs**<br />
@@ -134,15 +134,15 @@
         **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**<br />
     * **Users:**<br />
-- Index [token required]: GET `/api/users`
-- Show  [token and correct id required]: GET `/api/users/<user_id>`
-- Sign up: POST `/api/users/sign_up`
-- Sign in: POST `/api/users/sign_in`
-- Update [token and correct id required]: PUT `/api/users/<user_id>`
-- Delete [token and correct id required]: DELETE `/api/users/<user_id>`
+        * Index [token required]: GET `/api/users`
+        * Show  [token and correct id required]: GET `/api/users/<user_id>`
+        * Sign up: POST `/api/users/sign_up`
+        * Sign in: POST `/api/users/sign_in`
+        * Update [token and correct id required]: PUT `/api/users/<user_id>`
+        * Delete [token and correct id required]: DELETE `/api/users/<user_id>`
     * **Products:**<br />
-- Detailed Current Active Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/active`
-- Detailed List of Completed Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/completed`
+        * Detailed Current Active Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/active`
+        * Detailed List of Completed Orders by user [token and correct id required]: GET `/api/users/<user_id>/orders/completed`
 
 
 ### Orders<br />
@@ -189,12 +189,12 @@
         **Content:** `{ error : "Internal server error" }` <br />
 * **Satisfied requirements:**
     * **Orders:**<br />
-- Show [token and correct user id required]: GET `/api/orders/<order_id>`
-- Show order details [token and correct user id required]: GET `/api/orders/<order_id>/items`
-- Create [token required]: POST `/api/orders`
-- Update [token required and correct user id required]: PUT `/api/orders/<order_id>`
-- Delete [token required and correct user id required]: DELETE `/api/orders/<order_id>`
-- Add new item [token required and correct user id required]: POST `/api/orders/<order_id>/items`
-- Update item [token required and correct user id required]: PUT `/api/orders/<order_id>/items/<item_id>`
-- Delete item [token required and correct user id required]: DELETE `/api/orders/<order_id>/items/<item_id>`
-- Get a list of 5 most recent purchases made by logged in user [token required]: GET `/api/dashboard/most_recent`
+        * Show [token and correct user id required]: GET `/api/orders/<order_id>`
+        * Show order details [token and correct user id required]: GET `/api/orders/<order_id>/items`
+        * Create [token required]: POST `/api/orders`
+        * Update [token required and correct user id required]: PUT `/api/orders/<order_id>`
+        * Delete [token required and correct user id required]: DELETE `/api/orders/<order_id>`
+        * Add new item [token required and correct user id required]: POST `/api/orders/<order_id>/items`
+        * Update item [token required and correct user id required]: PUT `/api/orders/<order_id>/items/<item_id>`
+        * Delete item [token required and correct user id required]: DELETE `/api/orders/<order_id>/items/<item_id>`
+        * Get a list of 5 most recent purchases made by logged in user [token required]: GET `/api/dashboard/most_recent`
