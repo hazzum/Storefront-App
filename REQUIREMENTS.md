@@ -1,20 +1,20 @@
 ## Database Tables
 ### users
-|id| first_name | last_name |UNIQUE(user_name)|password_digest
-|--|--|--|--|--
-|serial primary key| string| string| string| string
+|id| first_name | last_name |UNIQUE(user_name)|password_digest|
+|--|--|--|--|--|
+|serial primary key| string| string| string| string|
 ### products
-|id| name | price
-|--|--|--
-|serial primary key| string| number
+|id| name | price|
+|--|--|--|
+|serial primary key| string| number|
 ### orders
-|id| status | user_id
-|--|--|--
-|serial primary key| string| foreign key references(users)
+|id| status | user_id|
+|--|--|--|
+|serial primary key| string| foreign key references(users)|
 ### order_items
-|id| quantity | order_id | product_id | constraints
-|--|--|--|--|--
-|serial primary key| string| foreign key references(orders) | foreign key references(products)| UNIQUE(order_id, product_id)
+|id| quantity | order_id | product_id | constraints|
+|--|--|--|--|--|
+|serial primary key| string| foreign key references(orders) | foreign key references(products)| UNIQUE(order_id, product_id)|
 
 ## Data Shapes
 #### Product
