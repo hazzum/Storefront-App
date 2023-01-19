@@ -17,5 +17,11 @@ module.exports = {
     'prettier/prettier': 2, // Means error
     'no-var': 'error',
     'prefer-const': 'error'
-  }
+  },
+  'prettier/prettier': [
+    'error',
+    {
+      'endOfLine': 'auto',
+    }
+  ]
 }
