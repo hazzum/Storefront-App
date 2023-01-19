@@ -19,16 +19,22 @@ describe('Test /api/products endpoints response', () => {
   }
   const product1: Product = {
     name: 'Cabinet',
+    url: '',
+    description: 'Place to store your stuff!',
     price: 400
   }
 
   const product2: Product = {
     name: 'Computer Desk',
+    url: '',
+    description: 'Look no where for a desktop',
     price: 300
   }
 
   const product3: Product = {
     name: 'Swivel Chair',
+    url: '',
+    description: 'Invented by Thomas Jefferson!',
     price: 150
   }
   beforeAll(async () => {
@@ -37,7 +43,7 @@ describe('Test /api/products endpoints response', () => {
   })
 
   it('Create product endpoint #1', async () => {
-    const response = await request.post('/api/products').set(authHeader).send(product1)
+    const response = await request.post('/api/products').set(authHeader).send(product1)    
     const { id } = response.body
     pID1 = id.toString()
     expect(response.status).toBe(200)
@@ -78,6 +84,8 @@ describe('Test /api/products endpoints response', () => {
   it(`Updating a product's info`, async () => {
     const newProduct: Product = {
       name: 'Ergonomic Swivel Chair',
+      url: '',
+      description: 'Thank you, Thomas Jefferson!',
       price: 120
     }
     const response = await request.put(`/api/products/${pID3}`).set(authHeader).send(newProduct)

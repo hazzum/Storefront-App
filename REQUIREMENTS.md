@@ -4,9 +4,9 @@
 |--|--|--|--|--|
 |serial primary key| string| string| string| string|
 ### products
-|id| name | price|
+|id| name | url| description| price|
 |--|--|--|
-|serial primary key| string| number|
+|serial primary key| string| string| string| number|
 ### orders
 |id| status | user_id|
 |--|--|--|
@@ -20,6 +20,8 @@
 #### Product
 - id: string
 - name: string
+- url: string
+- description: string
 - price: number
 
 #### User
@@ -44,6 +46,8 @@
 - item_id: string
 - product_id: string
 - name: string
+- url: string
+- description: string
 - price: number
 - quantity: number
 

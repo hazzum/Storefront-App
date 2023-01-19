@@ -1,12 +1,6 @@
 import express from 'express'
-import Joi from 'joi'
 import { Product, ProductStore } from '../../models/products'
 
-const pSchema: Joi.ObjectSchema = Joi.object({
-  id: Joi.string().pattern(new RegExp('^[0-9]+$')),
-  name: Joi.string().pattern(new RegExp('^[a-zA-Z0-9! -]{2,60}$')),
-  price: Joi.number()
-})
 const store = new ProductStore()
 
 const showAll = async (_req: express.Request, res: express.Response): Promise<void> => {
@@ -23,12 +17,6 @@ const showAll = async (_req: express.Request, res: express.Response): Promise<vo
 }
 
 const showOne = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = pSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   try {
     const product = await store.getByID(req.params.id)
     if (!product) {
@@ -44,13 +32,9 @@ const showOne = async (req: express.Request, res: express.Response): Promise<voi
 const Create = async (req: express.Request, res: express.Response): Promise<void> => {
   const product: Product = {
     name: req.body.name,
+    url: req.body.url,
+    description: req.body.description,
     price: req.body.price
-  }
-  //validate inputs
-  const { error } = pSchema.validate(product)
-  if (error) {
-    res.status(400).send(error.message)
-    return
   }
   try {
     const newProduct = await store.create(product)
@@ -64,13 +48,9 @@ const Update = async (req: express.Request, res: express.Response): Promise<void
   const product: Product = {
     id: req.params.id,
     name: req.body.name,
+    url: req.body.url,
+    description: req.body.description,
     price: req.body.price
-  }
-  //validate inputs
-  const { error } = pSchema.validate(product)
-  if (error) {
-    res.status(400).send(error.message)
-    return
   }
   try {
     const updated = await store.update(product)
@@ -85,12 +65,6 @@ const Update = async (req: express.Request, res: express.Response): Promise<void
 }
 
 const Delete = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = pSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   try {
     const deleted = await store.delete(req.params.id)
     if (!deleted) {

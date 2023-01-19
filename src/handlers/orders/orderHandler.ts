@@ -1,13 +1,7 @@
 import express from 'express'
-import Joi from 'joi'
 import { Order, OrderStore } from '../../models/orders'
 import { CartQueries, CartItem } from '../../services/cart'
 
-const oSchema: Joi.ObjectSchema = Joi.object({
-  id: Joi.string().pattern(new RegExp('^[0-9]+$')),
-  status: Joi.any().valid('active', 'complete'),
-  user_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
-})
 const store: OrderStore = new OrderStore()
 const cart: CartQueries = new CartQueries()
 
@@ -19,12 +13,6 @@ const verifyUser = (verified_id: string, user_id: string): void => {
 
 //show a list of detailed completed orders made by the current user
 const showAllCompleted = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = oSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   try {
     const detailed_orders: Array<{
       order_id: string
@@ -52,12 +40,6 @@ const showAllCompleted = async (req: express.Request, res: express.Response): Pr
 
 //show a list of detailed active orders that belong to the current user
 const showAllActive = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = oSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   try {
     const detailed_orders: Array<{
       order_id: string
@@ -84,12 +66,6 @@ const showAllActive = async (req: express.Request, res: express.Response): Promi
 }
 
 const showOne = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = oSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   try {
     const order = await store.getByID(req.params.id)
     if (!order) {
@@ -114,12 +90,6 @@ const Create = async (req: express.Request, res: express.Response): Promise<void
     status: req.body.status,
     user_id: res.locals.verified_user_id
   }
-  //validate inputs
-  const { error } = oSchema.validate(order)
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   //handle database operation
   try {
     const newOrder = await store.create(order)
@@ -133,12 +103,6 @@ const Update = async (req: express.Request, res: express.Response): Promise<void
   const update: Order = {
     id: req.params.id,
     status: req.body.status
-  }
-  //validate inputs
-  const { error } = oSchema.validate(update)
-  if (error) {
-    res.status(400).send(error.message)
-    return
   }
   //validate user
   try {
@@ -162,12 +126,6 @@ const Update = async (req: express.Request, res: express.Response): Promise<void
 }
 
 const Delete = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = oSchema.validate({ id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   //validate user
   try {
     const order = await store.getByID(req.params.id)

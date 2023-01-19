@@ -127,6 +127,8 @@ describe('Test Order model', () => {
       {
         const { id } = await productStore.create({
           name: 'Gum',
+          url: '',
+          description: 'You can chew on it!',
           price: 10
         })
         prodId = id as string
@@ -134,6 +136,8 @@ describe('Test Order model', () => {
       {
         const { id } = await productStore.create({
           name: 'Milkshake',
+          url: '',
+          description: 'Mmmmm, delicious!',
           price: 30
         })
         prodId2 = id as string

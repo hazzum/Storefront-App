@@ -36,14 +36,20 @@ describe('Test orders endpoints response', () => {
   }
   const product1: Product = {
     name: 'Cabinet',
+    url: '',
+    description: 'Place to store your stuff!',
     price: 400
   }
   const product2: Product = {
     name: 'Computer Desk',
+    url: '',
+    description: 'Look no where for a desktop',
     price: 300
   }
   const product3: Product = {
     name: 'Swivel Chair',
+    url: '',
+    description: 'Invented by Thomas Jefferson!',
     price: 150
   }
   const order1: Order = {
@@ -152,7 +158,7 @@ describe('Test orders endpoints response', () => {
   })
 
   describe('Test /api/orders/:id/items endpoints response', () => {
-    it('Add an Item to order 1 #1', async () => {
+    it('Add an Item to order 1 #1', async () => {      
       const response = await request
         .post(`/api/orders/${orderID1}/items`)
         .set(authHeader)

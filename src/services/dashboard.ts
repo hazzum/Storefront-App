@@ -20,7 +20,7 @@ export class DashboardQueries {
     try {
       const conn = await Client.connect()
       const sql = `
-        SELECT    products.id id, name, price, SUM(quantity) units_sold
+        SELECT    products.id id, name, url, description, price, SUM(quantity) units_sold
         FROM      products INNER JOIN order_items
         ON        products.id = order_items.product_id
         GROUP BY  products.id
@@ -38,7 +38,7 @@ export class DashboardQueries {
     try {
       const conn = await Client.connect()
       const sql = `
-        SELECT    products.id id, name, price, quantity
+        SELECT    products.id id, name, url, description, price, quantity
         FROM      products INNER JOIN order_items
         ON        products.id = order_items.product_id INNER JOIN orders
         ON        order_items.order_id = orders.id

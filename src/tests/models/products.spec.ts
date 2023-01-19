@@ -7,16 +7,22 @@ describe('Test Product model', () => {
   let pID3: string
   const product1: Product = {
     name: 'King-sized Bed',
+    url: '',
+    description: 'For kangs!',
     price: 800
   }
 
   const product2: Product = {
     name: 'Coffee Table',
+    url: '',
+    description: 'Best table money could buy!',
     price: 100
   }
 
   const product3: Product = {
     name: 'Kitchen Sink',
+    url: '',
+    description: '5-year warranty!',
     price: 150
   }
   describe('Function definitions', () => {
@@ -81,6 +87,8 @@ describe('Test Product model', () => {
       const newProduct = {
         id: pID2,
         name: 'Lamp',
+        url: '',
+        description: 'Recommended by all moths!',
         price: 50
       }
       const result = await store.update(newProduct)

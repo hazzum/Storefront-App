@@ -4,12 +4,6 @@ import { OrderStore } from '../../../models/orders'
 import { Item, ItemStore } from '../../../models/order_items'
 import { CartQueries } from '../../../services/cart'
 
-const iSchema: Joi.ObjectSchema = Joi.object({
-  id: Joi.string().pattern(new RegExp('^[0-9]+$')),
-  quantity: Joi.number().integer(),
-  order_id: Joi.string().pattern(new RegExp('^[0-9]+$')),
-  product_id: Joi.string().pattern(new RegExp('^[0-9]+$'))
-})
 const store = new OrderStore()
 const itemStore = new ItemStore()
 const cart = new CartQueries()
@@ -22,12 +16,6 @@ const verifyUser = (verified_id: string, user_id: string): void => {
 
 const showAll = async (req: express.Request, res: express.Response): Promise<void> => {
   const orderID = req.params.id
-  //validate inputs
-  const { error } = iSchema.validate({ order_id: orderID })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   //validate user
   try {
     const order = await store.getByID(orderID)
@@ -59,12 +47,6 @@ const addItem = async (req: express.Request, res: express.Response): Promise<voi
     order_id: req.params.id,
     product_id: req.body.product_id
   }
-  //validate inputs
-  const { error } = iSchema.validate({ order_id: req.params.id, ...item })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   //validate user
   try {
     const order = await store.getByID(req.params.id)
@@ -94,12 +76,6 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
   const item: Item = {
     id: req.params.item,
     quantity: req.body.quantity
-  }
-  //validate inputs
-  const { error } = iSchema.validate({ order_id: req.params.id, ...item })
-  if (error) {
-    res.status(400).send(error.message)
-    return
   }
   //validate user
   try {
@@ -131,12 +107,6 @@ const updateItem = async (req: express.Request, res: express.Response): Promise<
 }
 
 const deleteItem = async (req: express.Request, res: express.Response): Promise<void> => {
-  //validate inputs
-  const { error } = iSchema.validate({ id: req.params.item, order_id: req.params.id })
-  if (error) {
-    res.status(400).send(error.message)
-    return
-  }
   //validate user
   try {
     const order = await store.getByID(req.params.id)
