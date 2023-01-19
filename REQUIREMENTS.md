@@ -5,7 +5,7 @@
 |serial primary key| string| string| string| string|
 ### products
 |id| name | url| description| price|
-|--|--|--|
+|--|--|--|--|--|
 |serial primary key| string| string| string| number|
 ### orders
 |id| status | user_id|
