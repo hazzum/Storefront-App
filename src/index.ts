@@ -8,7 +8,7 @@ import routes from './routes/index'
 const PORT = 3000
 const corsOptions = {
   cors: true,
-  origin: 'http://localhost:3000',
+  origin: '*',
   optionSuccessStatus: 200
 }
 // create an instance server
