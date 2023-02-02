@@ -11,7 +11,7 @@ export class OrderStore {
   async index(user_id: string): Promise<Order[]> {
     try {
       const connect = await Client.connect()
-      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='complete'"
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='complete' ORDER BY id"
       const result = await connect.query(sql, [user_id])
       connect.release()
       return result.rows

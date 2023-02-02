@@ -19,7 +19,7 @@ export class CartQueries {
       FROM      products INNER JOIN order_items 
       ON        order_items.product_id = products.id 
       AND       order_items.order_id = ($1)
-      ORDER BY  order_items.id`
+      ORDER BY  order_items.id DESC`
       const result = await connect.query(sql, [order_id])
       connect.release()
       return result.rows
