@@ -129,7 +129,8 @@ describe('Test Order model', () => {
           name: 'Gum',
           url: '',
           description: 'You can chew on it!',
-          price: 10
+          price: 10,
+          stock:32
         })
         prodId = id as string
       }
@@ -138,7 +139,8 @@ describe('Test Order model', () => {
           name: 'Milkshake',
           url: '',
           description: 'Mmmmm, delicious!',
-          price: 30
+          price: 30,
+          stock:32
         })
         prodId2 = id as string
       }

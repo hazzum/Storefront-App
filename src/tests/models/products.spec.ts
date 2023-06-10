@@ -9,21 +9,24 @@ describe('Test Product model', () => {
     name: 'King-sized Bed',
     url: '',
     description: 'For kangs!',
-    price: 800
+    price: 800,
+    stock:32
   }
 
   const product2: Product = {
     name: 'Coffee Table',
     url: '',
     description: 'Best table money could buy!',
-    price: 100
+    price: 100,
+    stock:21
   }
 
   const product3: Product = {
     name: 'Kitchen Sink',
     url: '',
     description: '5-year warranty!',
-    price: 150
+    price: 150,
+    stock: 45
   }
   describe('Function definitions', () => {
     it('should have an show all method', () => {
@@ -89,7 +92,8 @@ describe('Test Product model', () => {
         name: 'Lamp',
         url: '',
         description: 'Recommended by all moths!',
-        price: 50
+        price: 50,
+        stock:32
       }
       const result = await store.update(newProduct)
       expect(result).toEqual(newProduct)

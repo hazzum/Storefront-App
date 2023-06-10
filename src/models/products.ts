@@ -6,13 +6,14 @@ export type Product = {
   url?: string
   description?: string
   price: number
+  stock?:number
 }
 
 export class ProductStore {
   async index(): Promise<Product[]> {
     try {
       const connect = await Client.connect()
-      const sql = 'SELECT * FROM products'
+      const sql = 'SELECT * FROM products ORDER BY id'
       const result = await connect.query(sql)
       connect.release()
       return result.rows
@@ -36,7 +37,7 @@ export class ProductStore {
   async create(Product: Product): Promise<Product> {
     try {
       const connect = await Client.connect()
-      const sql = 'INSERT INTO products (name, url, description, price) VALUES ($1, $2, $3, $4) RETURNING *'
+      const sql = 'INSERT INTO products (name, url, description, price, stock) VALUES ($1, $2, $3, $4, $5) RETURNING *'
       const result = await connect.query(sql, [...Object.values(Product)])
       connect.release()
       return result.rows[0]
@@ -48,7 +49,7 @@ export class ProductStore {
   async update(Product: Product): Promise<Product> {
     try {
       const connect = await Client.connect()
-      const sql = 'UPDATE products SET name=$2, url=$3, description=$4, price=$5 WHERE id=($1) RETURNING *'
+      const sql = 'UPDATE products SET name=$2, url=$3, description=$4, price=$5, stock=$6 WHERE id=($1) RETURNING *'
       const result = await connect.query(sql, [...Object.values(Product)])
       connect.release()
       return result.rows[0]

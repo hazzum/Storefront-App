@@ -9,5 +9,6 @@ items.get('/:id/items/', validateID, verifyTokenChain, itemsHandler.showAll)
 items.post('/:id/items/', validateItem, verifyTokenChain, itemsHandler.addItem)
 items.put('/:id/items/:item', validateHabal, verifyTokenChain, itemsHandler.updateItem)
 items.delete('/:id/items/:item', validateHabal, verifyTokenChain, itemsHandler.deleteItem)
+items.post('/:id/items/commit', validateID, verifyTokenChain, itemsHandler.commitOrder)
 
 export default items

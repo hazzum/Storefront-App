@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS products (
 	name VARCHAR(100) NOT NULL,
 	url TEXT DEFAULT NULL,
 	description TEXT DEFAULT NULL,
-	price FLOAT(2) NOT NULL
+	price FLOAT(2) NOT NULL,
+	stock INT NOT NULL
 );

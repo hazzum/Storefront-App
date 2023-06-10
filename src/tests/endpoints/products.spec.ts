@@ -21,21 +21,24 @@ describe('Test /api/products endpoints response', () => {
     name: 'Cabinet',
     url: '',
     description: 'Place to store your stuff!',
-    price: 400
+    price: 400,
+    stock:20
   }
 
   const product2: Product = {
     name: 'Computer Desk',
     url: '',
     description: 'Look no where for a desktop',
-    price: 300
+    price: 300,
+    stock:35
   }
 
   const product3: Product = {
     name: 'Swivel Chair',
     url: '',
     description: 'Invented by Thomas Jefferson!',
-    price: 150
+    price: 150,
+    stock:15
   }
   beforeAll(async () => {
     const { authToken } = (await request.post('/api/users/sign_up').send(user)).body
@@ -86,7 +89,8 @@ describe('Test /api/products endpoints response', () => {
       name: 'Ergonomic Swivel Chair',
       url: '',
       description: 'Thank you, Thomas Jefferson!',
-      price: 120
+      price: 120,
+      stock: 44
     }
     const response = await request.put(`/api/products/${pID3}`).set(authHeader).send(newProduct)
     expect(response.status).toBe(200)

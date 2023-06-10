@@ -16,7 +16,8 @@ const pSchema: Joi.ObjectSchema = Joi.object({
     name: Joi.string().pattern(new RegExp('^[a-zA-Z0-9! -]{2,60}$')),
     url: Joi.string().allow(null, ''),
     description: Joi.string().allow(null, ''),
-    price: Joi.number()
+    price: Joi.number(),
+    stock: Joi.number()
 })
 
 const oSchema: Joi.ObjectSchema = Joi.object({

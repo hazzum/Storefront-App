@@ -34,7 +34,8 @@ const Create = async (req: express.Request, res: express.Response): Promise<void
     name: req.body.name,
     url: req.body.url,
     description: req.body.description,
-    price: req.body.price
+    price: req.body.price,
+    stock: req.body.stock
   }
   try {
     const newProduct = await store.create(product)
@@ -50,7 +51,8 @@ const Update = async (req: express.Request, res: express.Response): Promise<void
     name: req.body.name,
     url: req.body.url,
     description: req.body.description,
-    price: req.body.price
+    price: req.body.price,
+    stock: req.body.stock
   }
   try {
     const updated = await store.update(product)

@@ -1,11 +1,12 @@
 import express from 'express'
-import Joi from 'joi'
 import { OrderStore } from '../../../models/orders'
+import { ProductStore } from '../../../models/products'
 import { Item, ItemStore } from '../../../models/order_items'
 import { CartQueries } from '../../../services/cart'
 
 const store = new OrderStore()
 const itemStore = new ItemStore()
+const productStore = new ProductStore()
 const cart = new CartQueries()
 
 const verifyUser = (verified_id: string, user_id: string): void => {
@@ -136,4 +137,39 @@ const deleteItem = async (req: express.Request, res: express.Response): Promise<
   }
 }
 
-export default { showAll, addItem, updateItem, deleteItem }
+const commitOrder = async (req: express.Request, res: express.Response): Promise<void> => {
+  //validate user
+  const order = await store.getByID(req.params.id)
+  try {
+    if (!order) {
+      res.status(404).json("Order doesn't exsit")
+      return
+    }
+    verifyUser(res.locals.verified_user_id, order.user_id as unknown as string)
+  } catch (err) {
+    res.status(401).json((err as Error).message)
+    return
+  }
+  //handle database operation
+  try {
+    const response = await cart.getItems(order.id as string)
+    const detailed_order = {
+      order_id:order.id!,
+      order_status:order.status,
+      order_details: response
+    }
+    detailed_order.order_details.forEach(async cartItem => {
+      const theProduct = await productStore.getByID(cartItem.product_id)
+      if (theProduct.stock) {
+        theProduct.stock -= cartItem.quantity
+        productStore.update(theProduct)
+      }
+    })
+    await store.update({id:order.id, status:'complete'})
+    res.status(200).send(order)
+  } catch (err) {
+    res.status(500).json((err as Error).message)
+  }
+}
+
+export default { showAll, addItem, updateItem, deleteItem, commitOrder }

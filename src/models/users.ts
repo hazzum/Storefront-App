@@ -87,7 +87,7 @@ export class UserStore {
       const connect = await Client.connect()
       const sql = 'SELECT id, user_name, password_digest FROM users WHERE user_name=($1)'
       const result = await connect.query(sql, [user_name])
-      const user = result.rows[0]
+      const user = result.rows[0]      
       connect.release()
       if (result.rows.length) {
         if (bcrypt.compareSync(password + salt, user.password_digest)) {

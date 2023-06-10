@@ -38,19 +38,24 @@ describe('Test orders endpoints response', () => {
     name: 'Cabinet',
     url: '',
     description: 'Place to store your stuff!',
-    price: 400
+    price: 400,
+    stock:20
   }
+
   const product2: Product = {
     name: 'Computer Desk',
     url: '',
     description: 'Look no where for a desktop',
-    price: 300
+    price: 300,
+    stock:35
   }
+
   const product3: Product = {
     name: 'Swivel Chair',
     url: '',
     description: 'Invented by Thomas Jefferson!',
-    price: 150
+    price: 150,
+    stock:15
   }
   const order1: Order = {
     status: 'active'

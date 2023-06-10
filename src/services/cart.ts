@@ -15,7 +15,7 @@ export class CartQueries {
     try {
       const connect = await Client.connect()
       const sql = `
-      SELECT    order_items.id item_id, products.id product_id , name, url, description, price, quantity
+      SELECT    order_items.id item_id, products.id product_id , name, url, description, price, quantity, stock
       FROM      products INNER JOIN order_items 
       ON        order_items.product_id = products.id 
       AND       order_items.order_id = ($1)
